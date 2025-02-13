@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+    <Properties>
+        <Property name="layout">%d [%t] %-5level %logger{36} - %msg%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${layout}" />
+        </Console>
+        <RollingFile name="FileLogger"
+                     fileName="${logdir}/application.log"
+                     filePattern="${logdir}/application-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${layout}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.filter.LoggingFilter" level="info" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="FileLogger" />
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="FileLogger" />
+        </Root>
+    </Loggers>
+</Configuration>
